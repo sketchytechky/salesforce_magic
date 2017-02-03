@@ -10,9 +10,9 @@ def query_salesforce(line, query=''):
            Examples::
              %%salesforce user,password,security_token
              SELECT id FROM task """
-        assert len(line.split(',')) == 3, 'You should specify 3 arguments:\nuser_id, password, security_token'
-        user, password, security_token = line.split(',')
-        if SALESFORCE_OBJECT is None:
+        if line or SALESFORCE_OBJECT is None:
+            assert len(line.split(',')) == 3, 'You should specify 3 arguments:\nuser_id, password, security_token'
+            user, password, security_token = line.split(',')
             SALESFORCE_OBJECT = Salesforce(user, password, security_token)
         df = SALESFORCE_OBJECT.query(query, deleted_included=True)
         return df
