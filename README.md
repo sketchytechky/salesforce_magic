@@ -19,7 +19,11 @@ Connect to a salesforce, using beatbox and then issue SQL commands within IPytho
     In [1]: %load_ext salesforce_magic
     In [2]: %%salesforce user,password,security_token
             select id from account
-   
+    In [3]: %%salesforce
+            select id from account
+
+Credentials is remembered after first input.
+
 # Existing Issues:
 - Long queries and salesforce time out
 
