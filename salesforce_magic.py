@@ -2,6 +2,7 @@ import itertools
 import beatbox
 import pandas as pd
 
+SALESFORCE_OBJECT = None
 
 def query_salesforce(line, query=''):
         """Runs SQL statement against a salesforce, using specified user,password and security token and beatbox.
@@ -11,8 +12,9 @@ def query_salesforce(line, query=''):
              SELECT id FROM task """
         assert len(line.split(',')) == 3, 'You should specify 3 arguments:\nuser_id, password, security_token'
         user, password, security_token = line.split(',')
-        sf = Salesforce(user, password, security_token)
-        df = sf.query(query, deleted_included=True)
+        if SALESFORCE_OBJECT is None:
+            SALESFORCE_OBJECT = Salesforce(user, password, security_token)
+        df = SALESFORCE_OBJECT.query(query, deleted_included=True)
         return df
 
 
